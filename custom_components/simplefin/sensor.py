@@ -12,6 +12,26 @@ from .const import DOMAIN
 from .coordinator import SimpleFinDataUpdateCoordinator
 
 
+# Usually they ask for soemthing like this
+#
+# SIMPLEFIN_SENSORS: tuple[SensorEntityDescription, ...] = (
+#     SensorEntityDescription(
+#         key="balance",
+#         translation_key="balance",
+#         icon="mid:LOTS_OF_MONEY",
+#         state_class=SensorStateClass.MEASUREMENT,
+#         value_fn = labmda x: x
+#     ),
+#     SensorEntityDescription(
+#         key="last_update",
+#         translation_key="last_update",        
+#         value_fn = labmda x: x
+#     ),
+#     )
+
+
+
+
 class SimpleFinBalanceSensor(CoordinatorEntity[SimpleFinDataUpdateCoordinator], SensorEntity):
     """Representation of a SimpleFinBalanceSensor."""
 
