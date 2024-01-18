@@ -1,7 +1,12 @@
 """Platform for sensor integration."""
 from __future__ import annotations
 
-from homeassistant.components.sensor import SensorEntity, SensorStateClass
+from dataclasses import dataclass
+from typing import Callable
+
+from simplefin4py import Account
+
+from homeassistant.components.sensor import SensorEntity, SensorStateClass, SensorEntityDescription
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
@@ -10,6 +15,7 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN
 from .coordinator import SimpleFinDataUpdateCoordinator
+from homeassistant.helpers.entity import EntityDescription
 
 
 # Usually they ask for soemthing like this
@@ -32,7 +38,14 @@ from .coordinator import SimpleFinDataUpdateCoordinator
 
 
 
-class SimpleFinBalanceSensor(CoordinatorEntity[SimpleFinDataUpdateCoordinator], SensorEntity):
+
+
+
+
+
+class SimpleFinBalanceSensor(
+    CoordinatorEntity[SimpleFinDataUpdateCoordinator], SensorEntity
+):
     """Representation of a SimpleFinBalanceSensor."""
 
     _attr_state_class = SensorStateClass.MEASUREMENT
@@ -65,8 +78,19 @@ class SimpleFinBalanceSensor(CoordinatorEntity[SimpleFinDataUpdateCoordinator], 
     @property
     def native_value(self) -> int | None:
         """Return the account balance."""
-        return next(account.balance for account in self.coordinator.data.accounts if account.id == self.account_id)
+        return next(
+            account.balance
+            for account in self.coordinator.data.accounts
+            if account.id == self.account_id
+        )
 
+    @property
+    def icon(self) -> str | None:
+        return next(
+            account.inferred_account_type.value
+            for account in self.coordinator.data.accounts
+            if account.id == self.account_id
+        )
 
 async def async_setup_entry(
     hass: HomeAssistant,
