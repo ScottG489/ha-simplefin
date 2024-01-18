@@ -3,11 +3,11 @@
   "name": "SimpleFin",
   "codeowners": ["@scottg489"],
   "config_flow": true,
-  "documentation": "https://github.com/ScottG489/ha-simplefin/issues",
+  "documentation": "https://github.com/ScottG489/ha-simplefin",
   "integration_type": "service",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/ScottG489/ha-simplefin/issues",
   "loggers": ["simplefin"],
-  "requirements": [""],
+  "requirements": ["simplefin4py==0.0.1"],
   "version": "0.0.0"
 }
