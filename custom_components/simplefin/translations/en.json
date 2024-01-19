@@ -1,19 +1,19 @@
 {
     "config": {
         "step": {
-            "abort": {
-                "already_configured": "Device is already configured"
-            },
+            "user": {},
             "creds": {
                 "data": {
                     "api_key": "API key"
                 }
-            },
-            "error": {
-                "invalid_auth": "Invalid authentication",
-                "unknown": "Unexpected error"
-            },
-            "user": {}
+            }
+        },
+        "abort": {
+            "already_configured": "Device is already configured"
+        },
+        "error": {
+            "invalid_auth": "Invalid authentication",
+            "unknown": "Unexpected error"
         }
     }
 }
