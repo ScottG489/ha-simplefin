@@ -93,6 +93,16 @@ class SimpleFinBalanceSensor(
         )
 
     @property
+    def native_unit_of_measurement(self) -> str | None:
+        account_info: Account = next(
+            account
+            for account in self.coordinator.data.accounts
+            if account.id == self.account_id
+        )
+        return account_info.currency
+
+
+    @property
     def extra_state_attributes(self) -> dict[str, Any]:
         """Return additional sensor state attributes."""
         account_info: Account = next(
