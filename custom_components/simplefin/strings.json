@@ -4,16 +4,17 @@
       "user": {},
       "creds": {
         "data": {
-          "api_token": "[%key:common::config_flow::data::api_token%]"
+          "api_token": "API claim token"
         }
       }
     },
     "abort": {
-      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+      "already_configured": "Device is already configured"
     },
     "error": {
-      "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
-      "unknown": "[%key:common::config_flow::error::unknown%]"
+      "invalid_claim_token": "Invalid claim token",
+      "invalid_auth": "Invalid authentication",
+      "unknown": "Unexpected error"
     }
   }
 }
