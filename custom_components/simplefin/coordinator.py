@@ -28,9 +28,6 @@ class SimpleFinDataUpdateCoordinator(DataUpdateCoordinator[Any]):
         )
         self.sf_client = sf_client
 
-    def _update(self) -> Any:
-        return self.sf_client.fetch_data()
-
     async def _async_update_data(self) -> Any:
         """Fetch data for all accounts."""
         return await self.sf_client.fetch_data()

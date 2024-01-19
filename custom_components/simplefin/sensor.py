@@ -1,12 +1,12 @@
 """Platform for sensor integration."""
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Callable
+from typing import Any
 
 from simplefin4py import Account
+from simplefin4py.model import AccountType
 
-from homeassistant.components.sensor import SensorEntity, SensorStateClass, SensorEntityDescription
+from homeassistant.components.sensor import SensorDeviceClass, SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
@@ -18,29 +18,18 @@ from .coordinator import SimpleFinDataUpdateCoordinator
 from homeassistant.helpers.entity import EntityDescription
 
 
-# Usually they ask for soemthing like this
-#
-# SIMPLEFIN_SENSORS: tuple[SensorEntityDescription, ...] = (
-#     SensorEntityDescription(
-#         key="balance",
-#         translation_key="balance",
-#         icon="mid:LOTS_OF_MONEY",
-#         state_class=SensorStateClass.MEASUREMENT,
-#         value_fn = labmda x: x
-#     ),
-#     SensorEntityDescription(
-#         key="last_update",
-#         translation_key="last_update",        
-#         value_fn = labmda x: x
-#     ),
-#     )
+def _enum_to_icon(inferred_type: AccountType) -> str:
+    """Based on the inferred account type - guess a starting icon."""
+    if inferred_type == AccountType.CHECKING:
+        return "mdi:checkbook"
+    if inferred_type == AccountType.CREDIT_CARD:
+        return "mdi:credit-card"
+    if inferred_type == AccountType.SAVINGS:
+        return "mdi:piggy-bank-outline"
+    if inferred_type == AccountType.INVESTMENT:
+        return "mdi:chart-areaspline"
 
-
-
-
-
-
-
+    return "mdi:cash"
 
 
 class SimpleFinBalanceSensor(
@@ -83,9 +72,11 @@ class SimpleFinBalanceSensor(
     @property
     def icon(self) -> str | None:
         """Utilize the inferred account type value as an icon."""
-        return self.coordinator.data.get_account_for_id(
-            self.account_id
-        ).inferred_account_type.value
+        return _enum_to_icon(
+            self.coordinator.data.get_account_for_id(
+                self.account_id
+            ).inferred_account_type
+        )
 
     @property
     def native_unit_of_measurement(self) -> str | None:
@@ -103,7 +94,7 @@ class SimpleFinBalanceSensor(
         return {
             "currency": account_info.currency,
             "available_balance": account_info.available_balance,
-            "last_update_epoch": account_info.balance_date,
+            "last_update": account_info.last_update,
             # Add more attributes here
         }
 
