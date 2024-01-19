@@ -8,6 +8,6 @@
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/ScottG489/ha-simplefin/issues",
   "loggers": ["simplefin"],
-  "requirements": ["simplefin4py==0.0.7"],
+  "requirements": ["simplefin4py==0.0.9"],
   "version": "0.0.0"
 }

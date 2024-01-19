@@ -29,6 +29,8 @@ def _enum_to_icon(inferred_type: AccountType) -> str:
         return "mdi:piggy-bank-outline"
     if inferred_type == AccountType.INVESTMENT:
         return "mdi:chart-areaspline"
+    if inferred_type == AccountType.MORTGAGE:
+        return "mdi:home-city-outline"
 
     return "mdi:cash"
 
