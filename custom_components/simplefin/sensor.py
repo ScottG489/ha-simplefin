@@ -6,7 +6,7 @@ from typing import Any
 from simplefin4py import Account
 from simplefin4py.model import AccountType
 
-from homeassistant.components.sensor import SensorDeviceClass, SensorEntity
+from homeassistant.components.sensor import SensorStateClass, SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
@@ -38,7 +38,8 @@ class SimpleFinBalanceSensor(
 ):
     """Representation of a SimpleFinBalanceSensor."""
 
-    _attr_state_class = SensorDeviceClass.MONETARY
+    _attr_state_class = SensorStateClass.TOTAL
+    _attr_device_class = SensorDeviceClass.MONETARY
     _attr_has_entity_name = True
 
     def __init__(
