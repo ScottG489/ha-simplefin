@@ -6,14 +6,14 @@
         "data": {
           "api_token": "[%key:common::config_flow::data::api_token%]"
         }
-      },
-      "abort": {
-        "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
-      },
-      "error": {
-        "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
-        "unknown": "[%key:common::config_flow::error::unknown%]"
       }
+    },
+    "abort": {
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+    },
+    "error": {
+      "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
+      "unknown": "[%key:common::config_flow::error::unknown%]"
     }
   }
 }

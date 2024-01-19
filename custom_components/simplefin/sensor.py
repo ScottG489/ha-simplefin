@@ -15,6 +15,7 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN
 from .coordinator import SimpleFinDataUpdateCoordinator
+from homeassistant.components.sensor import SensorDeviceClass
 from homeassistant.helpers.entity import EntityDescription
 
 
