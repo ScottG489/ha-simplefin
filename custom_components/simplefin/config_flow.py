@@ -38,21 +38,25 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             access_url = await SimpleFin.claim_setup_token(user_input[CONF_API_TOKEN])
         except SimpleFinInvalidClaimTokenError as ex:
             LOGGER.error(ex)
-            return self.async_show_form(
-                step_id="creds",
-                data_schema=CREDS_FORM_SCHEMA,
-                errors={"base": "invalid_claim_token"},
-                last_step=False,
-            )
+            return await self._show_creds_form(ex)
 
         return self.async_create_entry(
             title="SimpleFIN", data={"access_url": access_url}
         )
 
-    async def _show_creds_form(self) -> FlowResult:
+    async def _show_creds_form(self, ex: Exception = None) -> FlowResult:
+        if not ex:
+            return self.async_show_form(
+                step_id="creds", data_schema=CREDS_FORM_SCHEMA, last_step=False)
+
         return self.async_show_form(
             step_id="creds",
             data_schema=CREDS_FORM_SCHEMA,
-            last_step=False
+            errors=_get_error_key_for(ex),
+            last_step=False,
         )
 
+
+def _get_error_key_for(ex: Exception):
+    if isinstance(ex, SimpleFinInvalidClaimTokenError):
+        return {"base": "invalid_claim_token"}
