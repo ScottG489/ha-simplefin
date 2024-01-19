@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Callable
+from typing import Callable, Any
 
 from simplefin4py import Account
 
@@ -15,6 +15,7 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN
 from .coordinator import SimpleFinDataUpdateCoordinator
+from homeassistant.components.sensor import SensorDeviceClass
 from homeassistant.helpers.entity import EntityDescription
 
 
@@ -30,7 +31,7 @@ from homeassistant.helpers.entity import EntityDescription
 #     ),
 #     SensorEntityDescription(
 #         key="last_update",
-#         translation_key="last_update",        
+#         translation_key="last_update",
 #         value_fn = labmda x: x
 #     ),
 #     )
