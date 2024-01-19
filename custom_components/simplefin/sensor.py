@@ -48,7 +48,7 @@ class SimpleFinBalanceSensor(
 ):
     """Representation of a SimpleFinBalanceSensor."""
 
-    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_state_class = SensorDeviceClass.MONETARY
     _attr_has_entity_name = True
 
     def __init__(
@@ -78,37 +78,25 @@ class SimpleFinBalanceSensor(
     @property
     def native_value(self) -> int | None:
         """Return the account balance."""
-        return next(
-            account.balance
-            for account in self.coordinator.data.accounts
-            if account.id == self.account_id
-        )
+        return self.coordinator.data.get_account_for_id(self.account_id).balance
 
     @property
     def icon(self) -> str | None:
-        return next(
-            account.inferred_account_type.value
-            for account in self.coordinator.data.accounts
-            if account.id == self.account_id
-        )
+        """Utilize the inferred account type value as an icon."""
+        return self.coordinator.data.get_account_for_id(
+            self.account_id
+        ).inferred_account_type.value
 
     @property
     def native_unit_of_measurement(self) -> str | None:
-        account_info: Account = next(
-            account
-            for account in self.coordinator.data.accounts
-            if account.id == self.account_id
-        )
-        return account_info.currency
-
+        """Return the currency of this account."""
+        return self.coordinator.data.get_account_for_id(self.account_id).currency
 
     @property
-    def extra_state_attributes(self) -> dict[str, Any]:
+    def extra_state_attributes(self) -> dict[str, Any] | None:
         """Return additional sensor state attributes."""
-        account_info: Account = next(
-            account
-            for account in self.coordinator.data.accounts
-            if account.id == self.account_id
+        account_info: Account = self.coordinator.data.get_account_for_id(
+            self.account_id
         )
 
         # Example attributes
