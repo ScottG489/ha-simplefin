@@ -9,7 +9,7 @@ from homeassistant.data_entry_flow import FlowResult
 
 from .const import DOMAIN, LOGGER
 from simplefin4py import SimpleFin
-from simplefin4py.exceptions import SimpleFinInvalidClaimTokenError
+from simplefin4py.exceptions import SimpleFinInvalidClaimTokenError, SimpleFinClaimError
 
 CREDS_FORM_SCHEMA = vol.Schema(
     {
@@ -36,7 +36,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Create config entry."""
         try:
             access_url = await SimpleFin.claim_setup_token(user_input[CONF_API_TOKEN])
-        except SimpleFinInvalidClaimTokenError as ex:
+        except (SimpleFinInvalidClaimTokenError, SimpleFinClaimError) as ex:
             LOGGER.error(ex)
             return await self._show_creds_form(ex)
 
@@ -60,3 +60,5 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 def _get_error_key_for(ex: Exception):
     if isinstance(ex, SimpleFinInvalidClaimTokenError):
         return {"base": "invalid_claim_token"}
+    elif isinstance(ex, SimpleFinClaimError):
+        return {"base": "claim_error"}
