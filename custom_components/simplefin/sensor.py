@@ -92,6 +92,24 @@ class SimpleFinBalanceSensor(
             if account.id == self.account_id
         )
 
+    @property
+    def extra_state_attributes(self) -> dict[str, Any]:
+        """Return additional sensor state attributes."""
+        account_info: Account = next(
+            account
+            for account in self.coordinator.data.accounts
+            if account.id == self.account_id
+        )
+
+        # Example attributes
+        return {
+            "currency": account_info.currency,
+            "available_balance": account_info.available_balance,
+            "last_update_epoch": account_info.balance_date,
+            # Add more attributes here
+        }
+
+
 async def async_setup_entry(
     hass: HomeAssistant,
     config_entry: ConfigEntry,
