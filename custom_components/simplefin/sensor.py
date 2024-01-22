@@ -6,7 +6,11 @@ from typing import Any
 from simplefin4py import Account
 from simplefin4py.model import AccountType
 
-from homeassistant.components.sensor import SensorStateClass, SensorEntity
+from homeassistant.components.sensor import (
+    SensorDeviceClass,
+    SensorEntity,
+    SensorStateClass,
+)
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
@@ -15,8 +19,6 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN
 from .coordinator import SimpleFinDataUpdateCoordinator
-from homeassistant.components.sensor import SensorDeviceClass
-from homeassistant.helpers.entity import EntityDescription
 
 
 def _enum_to_icon(inferred_type: AccountType) -> str:
