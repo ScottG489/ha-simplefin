@@ -1,20 +1,25 @@
 # ha-simplefin
 ![maintenance-status](https://img.shields.io/badge/maintenance-active-brightgreen)
 
-SimpleFIN integration for Home Assistant.
+[SimpleFIN](https://www.simplefin.org/) integration for Home Assistant.
 
 ## Features
-- 
+- Entites for balances for each of your accounts
 
 ### Planned features
-- 
-
+- Entities for more fine-grained investment holdings
+- Transaction data?
 
 ## Installation
 First add this repository [as a custom repository](https://hacs.xyz/docs/faq/custom_repositories/).
 
 ### Setup
 #### Prerequisites
+Before setting up this integration, you need to get credentials by
+[creating a SimpleFIN account](https://beta-bridge.simplefin.org/). Connect your financial institutions to the platform,
+create a new "app", and record your setup token as this will need to be provided to the HA integration.
+
+[![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=simplefin)
 
 
 ## Development
