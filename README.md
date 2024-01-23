@@ -42,5 +42,3 @@ pytest tests --cov=custom_components.simplefin --cov-report term-missing
 ### Releasing
 [Create a new GitHub release](https://github.com/ScottG489/ha-simplefin/releases/new). The [release workflow](https://github.com/ScottG489/ha-simplefin/blob/master/.github/workflows/release.yaml) takes care of the rest.
 When finished, it will be available to download via HACS.
-
-### Troubleshooting
